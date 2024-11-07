@@ -9,7 +9,7 @@ class LaboratoryController extends Controller
 {
     public function index()
     {
-        $laboratories = Laboratory::all();
+        $laboratories = Laboratory::orderBy('created_at', 'desc')->get();
         return view('pages.backend.laboratories.index', compact('laboratories'));
     }
 

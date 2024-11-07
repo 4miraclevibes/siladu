@@ -10,7 +10,7 @@ class LocationController extends Controller
 {
     public function index()
     {
-        $locations = Location::all();
+        $locations = Location::orderBy('created_at', 'desc')->get();
         return view('pages.backend.locations.index', compact('locations'));
     }
 

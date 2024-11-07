@@ -11,8 +11,8 @@ class ParameterController extends Controller
 {
     public function index()
     {
-        $parameters = Parameter::all();
-        $packages = Package::all();
+        $parameters = Parameter::orderBy('created_at', 'desc')->get();
+        $packages = Package::orderBy('created_at', 'desc')->get();
         return view('pages.backend.parameters.index', compact('parameters', 'packages'));
     }
 

@@ -10,7 +10,7 @@ class QualityStandartController extends Controller
 {
     public function index()
     {
-        $qualityStandarts = QualityStandart::all();
+        $qualityStandarts = QualityStandart::orderBy('created_at', 'desc')->get();
         return view('pages.backend.qualityStandarts.index', compact('qualityStandarts'));
     }
 

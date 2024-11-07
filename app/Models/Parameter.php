@@ -15,4 +15,9 @@ class Parameter extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

@@ -11,8 +11,8 @@ class PackageController extends Controller
 {
     public function index()
     {
-        $packages = Package::all();
-        $laboratories = Laboratory::all();
+        $packages = Package::orderBy('created_at', 'desc')->get();
+        $laboratories = Laboratory::orderBy('created_at', 'desc')->get();
         return view('pages.backend.packages.index', compact('packages', 'laboratories'));
     }
 

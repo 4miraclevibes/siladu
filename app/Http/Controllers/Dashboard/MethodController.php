@@ -11,8 +11,8 @@ class MethodController extends Controller
 {
     public function index()
     {
-        $methods = Method::all();
-        $parameters = Parameter::all();
+        $methods = Method::orderBy('created_at', 'desc')->get();
+        $parameters = Parameter::orderBy('created_at', 'desc')->get();
         return view('pages.backend.methods.index', compact('methods', 'parameters'));
     }
 

@@ -15,7 +15,7 @@
         <a href="{{ route('instansi') }}" class="btn btn-sm btn-warning">
             <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6"></i></span> Pengajuan Instansi
         </a>
-        <a href="#" class="btn btn-sm btn-dark">
+        <a href="{{ route('noninstansi') }}" class="btn btn-sm btn-dark">
             <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6 text-warning"></i></span> Pengajuan Non Instansi
         </a>
     </div>

@@ -11,7 +11,7 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::where('user_id', Auth::user()->id)->get();
+        $payments = Payment::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return view('pages.frontend.payment', compact('payments'));
     }
     

@@ -88,6 +88,7 @@
                 </div>
             </div>
 
+            @if($transaction->category == 'instansi')
             <!-- Informasi Instansi -->
             <div class="card mb-4">
                 <div class="card-body">
@@ -114,7 +115,7 @@
                     </div>
                 </div>
             </div>
-
+            @endif
             <!-- Informasi Teknis -->
             <div class="card mb-4">
                 <div class="card-body">

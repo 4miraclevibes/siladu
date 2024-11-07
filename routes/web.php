@@ -16,8 +16,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WebhookController;
+use Illuminate\Support\Facades\Auth;
 // Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -25,8 +25,16 @@ Route::middleware('auth')->group(function () {
 });
 
 // Dashboard
-Route::middleware('auth')->group(function () {
+Route::group([
+    'middleware' => ['auth', function ($request, $next) {
+        if (Auth::user()->role->name !== 'admin') { // Asumsikan role_id 1 adalah admin
+            return redirect()->route('home')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        }
+        return $next($request);
+    }]
+], function () {
     // Users
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
@@ -75,6 +83,8 @@ Route::get('/transaction', [TransactionController::class, 'index'])->middleware(
 Route::get('/transaction/{id}', [TransactionController::class, 'show'])->middleware('auth')->name('transaction.show');
 Route::get('/instansi', [TransactionController::class, 'instansi'])->middleware('auth')->name('instansi');
 Route::post('/instansi', [TransactionController::class, 'instansiStore'])->middleware('auth')->name('instansi.store');
+Route::get('/noninstansi', [TransactionController::class, 'noninstansi'])->middleware('auth')->name('noninstansi');
+Route::post('/noninstansi', [TransactionController::class, 'noninstansiStore'])->middleware('auth')->name('noninstansi.store');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware('auth')->name('payment');
 Route::post('/payment/{payment}', [PaymentController::class, 'generatePayment'])->middleware('auth')->name('payment.generate');
 Route::post('/webhook', [WebhookController::class, 'update'])->name('webhook');
