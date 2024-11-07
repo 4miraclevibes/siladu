@@ -67,7 +67,7 @@ class TransactionController extends Controller
         Payment::create([
             'transaction_id' => $transaction->id,
             'user_id' => Auth::user()->id,
-            'payment_method' => 'bca_va',
+            'payment_method' => null,
             'payment_code' => 'TRX-' . $transaction->id . Auth::user()->id,
             'payment_amount' => $price,
             'payment_status' => 'pending',
