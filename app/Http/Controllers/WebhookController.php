@@ -12,7 +12,13 @@ class WebhookController extends Controller
     {
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         \Midtrans\Config::$isProduction = (bool) env('MIDTRANS_IS_PRODUCTION', false);
-        $notif = new \Midtrans\Notification();
+        
+        try {
+            $notif = new \Midtrans\Notification();
+        } catch (\Exception $e) {
+            \Log::error('Midtrans Notification Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Error processing Midtrans notification'], 500);
+        }
 
         $transactionStatus = $notif->transaction_status;
         $type = $notif->payment_type;
