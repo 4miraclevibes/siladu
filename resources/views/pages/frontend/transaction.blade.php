@@ -36,7 +36,7 @@
                         <div class="text-end d-flex flex-column align-items-end">
                             <h6 class="mb-2">
                                 @if($transaction->payment)
-                                    @if($transaction->payment->payment_status == 'paid')
+                                    @if($transaction->payment->payment_status == 'success')
                                         <span class="badge bg-success rounded-pill">
                                             <i class="bi bi-check-circle me-1"></i>Lunas
                                         </span>
