@@ -169,7 +169,7 @@
                         <div class="col-md-6">
                             <p class="mb-1"><strong>Status:</strong></p>
                             <p class="mb-0">
-                                @if($transaction->payment->payment_status == 'paid')
+                                @if($transaction->payment->payment_status == 'success')
                                     <span class="badge bg-success rounded-pill">Lunas</span>
                                 @elseif($transaction->payment->payment_status == 'pending')
                                     <span class="badge bg-warning rounded-pill">Pending</span>
