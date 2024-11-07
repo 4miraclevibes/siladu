@@ -78,7 +78,7 @@ Route::group([
 });
 
 // Frontend
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware('auth')->name('transaction');
 Route::get('/transaction/{id}', [TransactionController::class, 'show'])->middleware('auth')->name('transaction.show');
 Route::get('/instansi', [TransactionController::class, 'instansi'])->middleware('auth')->name('instansi');
