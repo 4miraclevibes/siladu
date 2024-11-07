@@ -76,5 +76,6 @@ Route::get('/transaction/{id}', [TransactionController::class, 'show'])->middlew
 Route::get('/instansi', [TransactionController::class, 'instansi'])->middleware('auth')->name('instansi');
 Route::post('/instansi', [TransactionController::class, 'instansiStore'])->middleware('auth')->name('instansi.store');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware('auth')->name('payment');
+Route::post('/payment/{payment}', [PaymentController::class, 'generatePayment'])->middleware('auth')->name('payment.generate');
 Route::post('/webhook', [WebhookController::class, 'update'])->name('webhook');
 require __DIR__.'/auth.php';
