@@ -25,7 +25,7 @@
                                 </span>
                             </h6>
                             <p class="mb-0">
-                                @if($payment->payment_status == 'paid')
+                                @if($payment->payment_status == 'success')
                                     <span class="badge bg-success rounded-pill px-3">
                                         <i class="bi bi-check-circle me-1"></i>Lunas
                                     </span>
