@@ -35,7 +35,7 @@
                 </span>
             </td>
             <td>
-                @if($payment->payment_status == 'paid')
+                @if($payment->payment_status == 'success')
                     <span class="badge bg-success rounded-pill">
                         <i class="bx bx-check-circle me-1"></i>Lunas
                     </span>
