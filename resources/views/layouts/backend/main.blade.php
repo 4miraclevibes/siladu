@@ -31,22 +31,23 @@
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}" />
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-    
+
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-    
+
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
-    
+
     <!-- Page CSS -->
-    
+
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
-    
+
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
       <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
       <script src="{{ asset('assets/js/config.js') }}"></script>
@@ -89,7 +90,7 @@
         border: 1px solid #000;
         width: 100px;
       }
-      
+
     .ck-editor__editable[role="textbox"] {
       /* editing area */
       min-height: 400px;
@@ -158,7 +159,7 @@
     .custom-alert-close:hover {
         opacity: .75;
     }
-      
+
       </style>
       @yield('styles')
   </head>
@@ -191,7 +192,7 @@
 
           <!-- Content wrapper -->
           <div class="content-wrapper">
-           
+
             @yield('content')
 
             @include('layouts.backend.footer')

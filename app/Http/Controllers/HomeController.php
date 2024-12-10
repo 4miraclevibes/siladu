@@ -12,36 +12,47 @@ class HomeController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
+        $year = request('year', 'all');
+        $month = request('month', 'all');
 
-        // Data untuk grafik transaksi per bulan (berdasarkan user)
-        $transactionsByMonth = Transaction::select(
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->where('user_id', $userId)
-        ->whereYear('created_at', date('Y'))
-        ->groupBy('month')
-        ->get()
-        ->mapWithKeys(function($item) {
-            $months = [
-                1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
-                4 => 'April', 5 => 'Mei', 6 => 'Juni',
-                7 => 'Juli', 8 => 'Agustus', 9 => 'September',
-                10 => 'Oktober', 11 => 'November', 12 => 'Desember'
-            ];
-            return [$months[$item->month] => $item->total];
-        })
-        ->toArray();
+        // Query dasar
+        $transactionsQuery = Transaction::where('user_id', $userId);
 
-        // Data untuk grafik status pembayaran (berdasarkan user)
-        $paymentStatus = Payment::select('payment_status', DB::raw('COUNT(*) as total'))
+        // Filter berdasarkan tahun jika dipilih
+        if ($year !== 'all') {
+            $transactionsQuery->whereYear('created_at', $year);
+        }
+
+        // Filter berdasarkan bulan jika dipilih
+        if ($month !== 'all') {
+            $transactionsQuery->whereMonth('created_at', $month);
+        }
+
+        // Total transaksi berdasarkan filter
+        $totalTransactions = $transactionsQuery->count();
+
+        // Status pembayaran
+        $paymentQuery = Payment::select('payment_status', DB::raw('COUNT(*) as total'))
             ->whereHas('transaction', function($query) use ($userId) {
                 $query->where('user_id', $userId);
-            })
-            ->groupBy('payment_status')
+            });
+
+        if ($year !== 'all') {
+            $paymentQuery->whereYear('created_at', $year);
+        }
+        if ($month !== 'all') {
+            $paymentQuery->whereMonth('created_at', $month);
+        }
+
+        $paymentStatus = $paymentQuery->groupBy('payment_status')
             ->pluck('total', 'payment_status')
             ->toArray();
 
-        return view('pages.frontend.home', compact('transactionsByMonth', 'paymentStatus'));
+        return view('pages.frontend.home', compact(
+            'totalTransactions',
+            'paymentStatus',
+            'year',
+            'month'
+        ));
     }
 }

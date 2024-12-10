@@ -12,68 +12,43 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Fungsi helper untuk nama bulan
-        $getMonthName = function($month) {
-            $months = [
-                1 => 'Januari', 
-                2 => 'Februari', 
-                3 => 'Maret', 
-                4 => 'April', 
-                5 => 'Mei', 
-                6 => 'Juni',
-                7 => 'Juli', 
-                8 => 'Agustus', 
-                9 => 'September', 
-                10 => 'Oktober', 
-                11 => 'November', 
-                12 => 'Desember'
-            ];
-            return $months[$month] ?? '';
-        };
+        $year = request('year', 'all');
+        $month = request('month', 'all');
 
-        // Data untuk grafik transaksi per bulan
-        $transactionsByMonth = Transaction::select(
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->whereYear('created_at', date('Y'))
-        ->groupBy('month')
-        ->get()
-        ->mapWithKeys(function($item) use ($getMonthName) {
-            return [$getMonthName($item->month) => $item->total];
-        })
-        ->toArray();
+        // Query dasar
+        $transactions = Transaction::query();
+        $paymentQuery = Payment::select('payment_status', DB::raw('COUNT(*) as total'));
+        $categoryQuery = Transaction::select('category', DB::raw('COUNT(*) as total'));
+        $incomeQuery = Payment::where('payment_status', 'success');
 
-        // Data untuk grafik parameter terpopuler
-        $popularParameters = Parameter::withCount('transactions')
-            ->orderBy('transactions_count', 'desc')
-            ->take(5)
-            ->get();
+        // Filter berdasarkan tahun dan bulan
+        if ($year !== 'all') {
+            $transactions->whereYear('created_at', $year);
+            $paymentQuery->whereYear('created_at', $year);
+            $categoryQuery->whereYear('created_at', $year);
+            $incomeQuery->whereYear('created_at', $year);
+        }
+        if ($month !== 'all') {
+            $transactions->whereMonth('created_at', $month);
+            $paymentQuery->whereMonth('created_at', $month);
+            $categoryQuery->whereMonth('created_at', $month);
+            $incomeQuery->whereMonth('created_at', $month);
+        }
 
-        // Data untuk grafik lokasi terpopuler
-        $popularLocations = Location::withCount('transactions')
-            ->orderBy('transactions_count', 'desc')
-            ->take(5)
-            ->get();
+        $data = [
+            'total_transactions' => $transactions->count(),
+            'total_parameters' => Parameter::count(),
+            'total_locations' => Location::count(),
+            'total_income' => $incomeQuery->sum('payment_amount'),
+            'payment_status' => $paymentQuery->groupBy('payment_status')
+                ->pluck('total', 'payment_status')
+                ->toArray(),
+            'transaction_categories' => $categoryQuery->groupBy('category')
+                ->pluck('total', 'category')
+                ->toArray()
+        ];
 
-        // Data untuk grafik status pembayaran
-        $paymentStatus = Payment::select('payment_status', DB::raw('COUNT(*) as total'))
-            ->groupBy('payment_status')
-            ->pluck('total', 'payment_status')
-            ->toArray();
-
-        // Data untuk grafik kategori transaksi
-        $transactionCategories = Transaction::select('category', DB::raw('COUNT(*) as total'))
-            ->groupBy('category')
-            ->pluck('total', 'category')
-            ->toArray();
-
-        return view('dashboard', compact(
-            'transactionsByMonth',
-            'popularParameters',
-            'popularLocations',
-            'paymentStatus',
-            'transactionCategories'
-        ));
+        return view('dashboard', compact('data', 'year', 'month'));
     }
 }
+

@@ -14,8 +14,8 @@ class PaymentController extends Controller
         $payments = Payment::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return view('pages.frontend.payment', compact('payments'));
     }
-    
-    
+
+
     public function generatePayment(Request $request, Payment $payment)
     {
         $request->validate([
@@ -36,17 +36,17 @@ class PaymentController extends Controller
                 'payment_link' => $midtrans['redirect_url'],
                 'payment_method' => $request->payment_method
             ]);
-            
+
             DB::commit();
 
-            return back()->with('success', 'Top Up Berhasil');
+            return back()->with('success', 'Berhasil generate link pembayaran');
         } catch (\Throwable $th) {
             DB::rollback();
 
-            return back()->with('error', 'Top Up Gagal');
+            return back()->with('error', 'Gagal generate link pembayaran');
         }
     }
-    
+
     private function callMidtrans(array $params)
     {
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
@@ -91,7 +91,7 @@ class PaymentController extends Controller
     private function splitName($fullName)
     {
         $name = explode(' ', $fullName);
-        
+
         $lastName = count($name)  > 1 ? array_pop($name) : $fullName;
         $firstName = implode(' ', $name);
 
