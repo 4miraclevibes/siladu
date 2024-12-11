@@ -18,11 +18,9 @@
         <thead>
           <tr class="text-nowrap table-dark">
             <th class="text-white">No</th>
-            <th class="text-white">Nama Proyek</th>
             <th class="text-white">Penanggung Jawab</th>
             <th class="text-white">Instansi</th>
             <th class="text-white">Parameter</th>
-            <th class="text-white">Lokasi</th>
             <th class="text-white">Status</th>
             <th class="text-white">Status Pembayaran</th>
             <th class="text-white">Actions</th>
@@ -32,11 +30,9 @@
           @foreach ($transactions as $transaction)
           <tr>
             <th scope="row">{{ $loop->iteration }}</th>
-            <td>{{ $transaction->nama_proyek }}</td>
             <td>{{ $transaction->nama_penanggung_jawab }}</td>
             <td>{{ $transaction->nama_instansi }}</td>
             <td>{{ $transaction->parameter->name }}</td>
-            <td>{{ $transaction->location->name }}</td>
             <td>
               @if($transaction->status == 'pending')
                 <span class="badge bg-warning">Pending</span>

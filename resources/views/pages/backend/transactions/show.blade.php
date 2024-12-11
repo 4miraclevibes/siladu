@@ -25,7 +25,6 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="p-3 bg-light rounded">
-                                                <p class="mb-2"><i class="bx bx-bookmark me-2"></i><strong>Nama Proyek:</strong> {{ $transaction->nama_proyek }}</p>
                                                 <p class="mb-2"><i class="bx bx-category me-2"></i><strong>Kategori:</strong> {{ ucfirst($transaction->category) }}</p>
                                                 <p class="mb-0"><i class="bx bx-test-tube me-2"></i><strong>Jenis Bahan Sampel:</strong> {{ $transaction->jenis_bahan_sampel }}</p>
                                             </div>
@@ -33,22 +32,22 @@
                                         <div class="col-md-6">
                                             <div class="p-3 bg-light rounded">
                                                 <p class="mb-2">
-                                                    <i class="bx bx-check-circle me-2"></i><strong>Status Uji:</strong> 
-                                                    <span class="badge bg-{{ $transaction->status_uji == 'selesai' ? 'success' : 'warning' }} rounded-pill">
-                                                        {{ ucfirst($transaction->status_uji) }}
+                                                    <i class="bx bx-check-circle me-2"></i><strong>Pengembalian sample:</strong>
+                                                    <span class="badge bg-{{ $transaction->pengembalian_sampel == 'dikembalikan' ? 'success' : 'warning' }} rounded-pill">
+                                                        {{ ucfirst($transaction->pengembalian_sampel) }}
                                                     </span>
                                                 </p>
                                                 <p class="mb-2">
-                                                    <i class="bx bx-transfer me-2"></i><strong>Status Pengembalian:</strong> 
+                                                    <i class="bx bx-transfer me-2"></i><strong>Pengembalian sisa sample:</strong>
                                                     <span class="badge bg-{{ $transaction->status_pengembalian == 'dikembalikan' ? 'success' : 'warning' }} rounded-pill">
-                                                        {{ ucfirst($transaction->status_pengembalian) }}
+                                                        {{ ucfirst($transaction->pengembalian_sisa_sampel) }}
                                                     </span>
                                                 </p>
                                                 <p class="mb-0">
-                                                    <i class="bx bx-info-circle me-2"></i><strong>Status:</strong> 
-                                                    <span class="badge bg-{{ 
-                                                        $transaction->status == 'pending' ? 'warning' : 
-                                                        ($transaction->status == 'process' ? 'info' : 'success') 
+                                                    <i class="bx bx-info-circle me-2"></i><strong>Status:</strong>
+                                                    <span class="badge bg-{{
+                                                        $transaction->status == 'pending' ? 'warning' :
+                                                        ($transaction->status == 'process' ? 'info' : 'success')
                                                     }} rounded-pill">
                                                         {{ ucfirst($transaction->status) }}
                                                     </span>
@@ -106,8 +105,6 @@
                                     </div>
                                     <div class="p-3 bg-light rounded">
                                         <p class="mb-2"><i class="bx bx-test-tube me-2"></i><strong>Parameter:</strong> {{ $transaction->parameter->name }}</p>
-                                        <p class="mb-2"><i class="bx bx-map-pin me-2"></i><strong>Lokasi:</strong> {{ $transaction->location->name }}</p>
-                                        <p class="mb-0"><i class="bx bx-check-shield me-2"></i><strong>Standar Kualitas:</strong> {{ $transaction->qualityStandart->name }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -124,8 +121,8 @@
                                     <div class="p-3 bg-light rounded">
                                         <p class="mb-3"><i class="bx bx-hash me-2"></i><strong>No. Surat:</strong> {{ $transaction->no_surat }}</p>
                                         @if($transaction->file_surat)
-                                        <a href="{{ Storage::url($transaction->file_surat) }}" 
-                                           class="btn btn-outline-danger btn-sm" 
+                                        <a href="{{ Storage::url($transaction->file_surat) }}"
+                                           class="btn btn-outline-danger btn-sm"
                                            target="_blank">
                                             <i class="bx bx-download me-1"></i> Download Surat
                                         </a>
@@ -143,8 +140,8 @@
                                         <i class="bx bx-task text-dark fs-3 me-2"></i>
                                         <h6 class="card-subtitle text-dark mb-0">Aksi</h6>
                                     </div>
-                                    <form action="{{ route('dashboard.transactions.updateStatus', $transaction->id) }}" 
-                                          method="POST" 
+                                    <form action="{{ route('dashboard.transactions.updateStatus', $transaction->id) }}"
+                                          method="POST"
                                           class="d-inline">
                                         @csrf
                                         @method('PATCH')
