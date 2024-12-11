@@ -107,8 +107,12 @@
                         <input type="email" class="form-control" name="email_penanggung_jawab" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label required">No. HP Penanggung Jawab</label>
+                        <label class="form-label required">No. WhatsApp Penanggung Jawab</label>
                         <input type="number" class="form-control" name="no_hp_penanggung_jawab" required>
+                        <small class="text-muted">
+                            Format: Dimulai dengan 628 (contoh: 628123456789).
+                            Jangan gunakan awalan +62 atau 0
+                        </small>
                     </div>
                 </div>
             </div>
