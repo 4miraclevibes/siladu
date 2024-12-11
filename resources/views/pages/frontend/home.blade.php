@@ -93,7 +93,7 @@
 
     <!-- Statistik Utama -->
     <div class="row g-3 mb-4">
-        <div class="col-6">
+        <div class="col-12">
             <div class="card stats-card shadow-sm h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
@@ -123,7 +123,7 @@
                         <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3">
                             <div>
                                 <div class="status-badge
-                                    {{ $status == 'Lunas' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
+                                    {{ $status == 'success' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
                                     {{ $status }}
                                 </div>
                             </div>

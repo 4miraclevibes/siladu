@@ -38,24 +38,12 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <p class="mb-1"><strong>Nama Proyek:</strong></p>
-                            <p class="text-muted">{{ $transaction->nama_proyek }}</p>
-                        </div>
-                        <div class="col-md-6">
                             <p class="mb-1"><strong>Kategori:</strong></p>
                             <p class="text-muted">{{ ucfirst($transaction->category) }}</p>
                         </div>
                         <div class="col-md-6">
                             <p class="mb-1"><strong>Jenis Bahan Sampel:</strong></p>
                             <p class="text-muted">{{ $transaction->jenis_bahan_sampel }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="mb-1"><strong>Status Uji:</strong></p>
-                            <p class="mb-0">
-                                <span class="badge bg-{{ $transaction->status_uji == 'selesai' ? 'success' : 'warning' }} rounded-pill">
-                                    {{ ucfirst($transaction->status_uji) }}
-                                </span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -127,14 +115,6 @@
                             <p class="mb-1"><strong>Parameter:</strong></p>
                             <p class="text-muted">{{ $transaction->parameter->name }}</p>
                         </div>
-                        <div class="col-md-6">
-                            <p class="mb-1"><strong>Lokasi:</strong></p>
-                            <p class="text-muted">{{ $transaction->location->name }}</p>
-                        </div>
-                        <div class="col-md-12">
-                            <p class="mb-1"><strong>Standar Kualitas:</strong></p>
-                            <p class="text-muted">{{ $transaction->qualityStandart->name }}</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -183,7 +163,7 @@
 
                     @if($transaction->payment->payment_link && $transaction->payment->payment_status == 'pending')
                     <div class="text-end mt-3">
-                        <a href="{{ $transaction->payment->payment_link }}" 
+                        <a href="{{ $transaction->payment->payment_link }}"
                            class="btn btn-primary"
                            target="_blank">
                             <i class="bi bi-credit-card me-1"></i>Lanjutkan Pembayaran
@@ -208,7 +188,7 @@
                         @if($transaction->file_surat)
                         <div class="col-md-6">
                             <p class="mb-1"><strong>File Surat:</strong></p>
-                            <a href="{{ Storage::url($transaction->file_surat) }}" 
+                            <a href="{{ Storage::url($transaction->file_surat) }}"
                                class="btn btn-outline-primary btn-sm"
                                target="_blank">
                                 <i class="bi bi-download me-1"></i>Download Surat

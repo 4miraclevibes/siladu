@@ -36,8 +36,6 @@ class TransactionController extends Controller
     {
         $request->validate([
             'parameter_id' => 'required',
-            'location_id' => 'required',
-            'quality_standart_id' => 'required',
             'nama_instansi' => 'required',
             'alamat_instansi' => 'required',
             'telepon_instansi' => 'required',
@@ -46,16 +44,16 @@ class TransactionController extends Controller
             'identitas_penanggung_jawab' => 'required',
             'email_penanggung_jawab' => 'required',
             'no_hp_penanggung_jawab' => 'required',
-            'nama_proyek' => 'required',
             'jenis_bahan_sampel' => 'required',
             'no_surat' => 'nullable',
             'file_surat' => 'nullable|file|max:1024|mimes:png,jpg,pdf',
-            'status_pengembalian' => 'required',
-            'status_uji' => 'required',
+            'pengembalian_sampel' => 'required',
+            'pengembalian_sisa_sampel' => 'required',
         ]);
-        
+
+
         $data = $request->all();
-        
+
         if ($request->hasFile('file_surat')) {
             $data['file_surat'] = $request->file('file_surat')->store('file_surat', 'public');
         }
@@ -87,22 +85,19 @@ class TransactionController extends Controller
     {
         $request->validate([
             'parameter_id' => 'required',
-            'location_id' => 'required',
-            'quality_standart_id' => 'required',
             'nama_penanggung_jawab' => 'required',
             'identitas_penanggung_jawab' => 'required',
             'email_penanggung_jawab' => 'required',
             'no_hp_penanggung_jawab' => 'required',
-            'nama_proyek' => 'required',
             'jenis_bahan_sampel' => 'required',
             'no_surat' => 'nullable',
             'file_surat' => 'nullable|file|max:1024|mimes:png,jpg,pdf',
-            'status_pengembalian' => 'required',
-            'status_uji' => 'required',
+            'pengembalian_sampel' => 'required',
+            'pengembalian_sisa_sampel' => 'required',
         ]);
-        
+
         $data = $request->all();
-        
+
         if ($request->hasFile('file_surat')) {
             $data['file_surat'] = $request->file('file_surat')->store('file_surat', 'public');
         }

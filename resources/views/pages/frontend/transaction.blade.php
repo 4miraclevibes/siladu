@@ -11,11 +11,11 @@
 
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('instansi') }}" class="btn btn-sm btn-warning">
+    <div class="d-flex justify-content-around align-items-center mb-3">
+        <a href="{{ route('instansi') }}" class="btn btn-sm btn-warning mx-1">
             <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6"></i></span> Pengajuan Instansi
         </a>
-        <a href="{{ route('noninstansi') }}" class="btn btn-sm btn-dark">
+        <a href="{{ route('noninstansi') }}" class="btn btn-sm btn-dark mx-1">
             <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6 text-warning"></i></span> Pengajuan Non Instansi
         </a>
     </div>
@@ -53,13 +53,13 @@
                             </h6>
                             <div>
                                 @if($transaction->payment && $transaction->payment->payment_link)
-                                    <a href="{{ $transaction->payment->payment_link }}" 
+                                    <a href="{{ $transaction->payment->payment_link }}"
                                        class="btn btn-sm btn-primary"
                                        target="_blank">
                                         <i class="bi bi-credit-card me-1"></i>Bayar
                                     </a>
                                 @endif
-                                <a href="{{ route('transaction.show', $transaction->id) }}" 
+                                <a href="{{ route('transaction.show', $transaction->id) }}"
                                    class="btn btn-sm btn-info ms-1">
                                     <i class="bi bi-eye me-1"></i>Detail
                                 </a>

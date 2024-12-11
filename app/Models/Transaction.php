@@ -9,8 +9,6 @@ class Transaction extends Model
     protected $fillable = [
         'user_id',
         'parameter_id',
-        'location_id',
-        'quality_standart_id',
         'category',
         'nama_penanggung_jawab',
         'identitas_penanggung_jawab',
@@ -22,9 +20,8 @@ class Transaction extends Model
         'alamat_instansi',
         'no_surat',
         'file_surat',
-        'nama_proyek',
-        'status_pengembalian',
-        'status_uji',
+        'pengembalian_sampel',
+        'pengembalian_sisa_sampel',
         'jenis_bahan_sampel',
         'status',
     ];
@@ -37,16 +34,6 @@ class Transaction extends Model
     public function parameter()
     {
         return $this->belongsTo(Parameter::class);
-    }
-
-    public function location()
-    {
-        return $this->belongsTo(Location::class);
-    }
-
-    public function qualityStandart()
-    {
-        return $this->belongsTo(QualityStandart::class);
     }
 
     public function payment()

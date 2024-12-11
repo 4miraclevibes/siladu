@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('parameter_id')->constrained('parameters');
-            $table->foreignId('location_id')->constrained('locations');
-            $table->foreignId('quality_standart_id')->constrained('quality_standarts');
             $table->string('category');
             $table->string('nama_penanggung_jawab');
             $table->string('identitas_penanggung_jawab');
@@ -28,9 +26,8 @@ return new class extends Migration
             $table->string('alamat_instansi')->nullable();
             $table->string('no_surat')->nullable();
             $table->string('file_surat')->nullable();
-            $table->string('nama_proyek')->nullable();
-            $table->enum('status_pengembalian', ['ya', 'tidak'])->default('tidak');
-            $table->enum('status_uji', ['ya', 'tidak'])->default('tidak');
+            $table->enum('pengembalian_sampel', ['ya', 'tidak'])->default('tidak');
+            $table->enum('pengembalian_sisa_sampel', ['ya', 'tidak'])->default('tidak');
             $table->string('jenis_bahan_sampel')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
