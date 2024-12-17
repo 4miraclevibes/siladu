@@ -155,6 +155,7 @@
       }
     </style>
     @yield('style')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <div id="loading" class="loading" style="display: none;">
@@ -201,7 +202,7 @@
       (function() {
         let isLoading = false;
         const loadingElement = document.getElementById('loading');
-        
+
         function showLoading() {
             if (loadingElement) {
                 loadingElement.style.display = 'flex';
@@ -249,7 +250,7 @@
         window.addEventListener('load', forceHideLoading);
 
         // Tangani kasus ketika halaman di-refresh atau navigasi kembali
-        if (performance.navigation.type === performance.navigation.TYPE_RELOAD || 
+        if (performance.navigation.type === performance.navigation.TYPE_RELOAD ||
             performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
             forceHideLoading();
         }

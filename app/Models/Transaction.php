@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Village;
 
 class Transaction extends Model
 {
@@ -24,6 +28,10 @@ class Transaction extends Model
         'pengembalian_sisa_sampel',
         'jenis_bahan_sampel',
         'status',
+        'province_id',
+        'city_id',
+        'district_id',
+        'village_id',
     ];
 
     public function user()
@@ -39,5 +47,25 @@ class Transaction extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function village()
+    {
+        return $this->belongsTo(Village::class);
     }
 }

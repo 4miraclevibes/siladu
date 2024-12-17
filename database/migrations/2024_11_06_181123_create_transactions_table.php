@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('parameter_id')->constrained('parameters');
+            $table->foreignId('province_id')->constrained('indonesia_provinces');
+            $table->foreignId('city_id')->constrained('indonesia_cities');
+            $table->foreignId('district_id')->constrained('indonesia_districts');
+            $table->foreignId('village_id')->constrained('indonesia_villages');
             $table->string('category');
             $table->string('nama_penanggung_jawab');
             $table->string('identitas_penanggung_jawab');

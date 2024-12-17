@@ -9,6 +9,9 @@ use App\Models\QualityStandart;
 use App\Models\Transaction;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Village;
 
 class TransactionController extends Controller
 {
@@ -29,7 +32,26 @@ class TransactionController extends Controller
         $parameters = Parameter::all();
         $locations = Location::all();
         $qualityStandarts = QualityStandart::all();
-        return view('pages.frontend.instansi', compact('parameters', 'locations', 'qualityStandarts'));
+        $provinces = \Indonesia::allProvinces();
+        return view('pages.frontend.instansi', compact('parameters', 'locations', 'qualityStandarts', 'provinces'));
+    }
+
+    public function getCities($provinceId)
+    {
+        $cities = \Indonesia::findProvince($provinceId)->cities;
+        return response()->json($cities);
+    }
+
+    public function getDistricts($cityId)
+    {
+        $districts = \Indonesia::findCity($cityId)->districts;
+        return response()->json($districts);
+    }
+
+    public function getVillages($districtId)
+    {
+        $villages = \Indonesia::findDistrict($districtId)->villages;
+        return response()->json($villages);
     }
 
     public function instansiStore(Request $request)
@@ -49,6 +71,10 @@ class TransactionController extends Controller
             'file_surat' => 'nullable|file|max:1024|mimes:png,jpg,pdf',
             'pengembalian_sampel' => 'required',
             'pengembalian_sisa_sampel' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'district_id' => 'required',
+            'village_id' => 'required',
         ]);
 
 
@@ -79,7 +105,8 @@ class TransactionController extends Controller
         $parameters = Parameter::all();
         $locations = Location::all();
         $qualityStandarts = QualityStandart::all();
-        return view('pages.frontend.noninstansi', compact('parameters', 'locations', 'qualityStandarts'));
+        $provinces = \Indonesia::allProvinces();
+        return view('pages.frontend.noninstansi', compact('parameters', 'locations', 'qualityStandarts', 'provinces'));
     }
 
     public function noninstansiStore(Request $request)
@@ -95,6 +122,10 @@ class TransactionController extends Controller
             'file_surat' => 'nullable|file|max:1024|mimes:png,jpg,pdf',
             'pengembalian_sampel' => 'required',
             'pengembalian_sisa_sampel' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'district_id' => 'required',
+            'village_id' => 'required',
         ]);
 
         $data = $request->all();
@@ -129,6 +160,11 @@ class TransactionController extends Controller
             . "Parameter: *" . $transaction->parameter->name . "*\n"
             . "Jenis Sampel: " . $transaction->jenis_bahan_sampel . "\n"
             . ($transaction->nama_instansi ? "Instansi: " . $transaction->nama_instansi . "\n" : "")
+            . "\n📍 *Lokasi*\n"
+            . "Provinsi: " . $transaction->province->name . "\n"
+            . "Kota/Kabupaten: " . $transaction->city->name . "\n"
+            . "Kecamatan: " . $transaction->district->name . "\n"
+            . "Desa/Kelurahan: " . $transaction->village->name . "\n\n"
             . "Status: *PENDING*\n\n"
             . "💡 Silahkan cek dashboard admin untuk detail lebih lanjut.\n"
             . "Waktu Pengajuan: " . $transaction->created_at->format('d M Y H:i') . " WIB";

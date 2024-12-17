@@ -88,4 +88,7 @@ Route::post('/noninstansi', [TransactionController::class, 'noninstansiStore'])-
 Route::get('/payment', [PaymentController::class, 'index'])->middleware('auth')->name('payment');
 Route::post('/payment/{payment}', [PaymentController::class, 'generatePayment'])->middleware('auth')->name('payment.generate');
 Route::post('/webhook', [WebhookController::class, 'update'])->name('webhook');
+Route::get('/getCities/{province_id}', [TransactionController::class, 'getCities']);
+Route::get('/getDistricts/{city_id}', [TransactionController::class, 'getDistricts']);
+Route::get('/getVillages/{district_id}', [TransactionController::class, 'getVillages']);
 require __DIR__.'/auth.php';

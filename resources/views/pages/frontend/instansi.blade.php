@@ -89,6 +89,43 @@
 
         <div class="card mb-4">
             <div class="card-header">
+                <h5>Data Wilayah</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Provinsi</label>
+                        <select class="form-select" name="province_id" id="province_id" required>
+                            <option value="">Pilih Provinsi</option>
+                            @foreach($provinces as $province)
+                                <option value="{{ $province->id }}">{{ $province->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Kabupaten/Kota</label>
+                        <select class="form-select" name="city_id" id="city_id" required>
+                            <option value="">Pilih Kabupaten/Kota</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Kecamatan</label>
+                        <select class="form-select" name="district_id" id="district_id" required>
+                            <option value="">Pilih Kecamatan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Desa/Kelurahan</label>
+                        <select class="form-select" name="village_id" id="village_id" required>
+                            <option value="">Pilih Desa/Kelurahan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
                 <h5>Data Penanggung Jawab</h5>
             </div>
             <div class="card-body">
@@ -192,4 +229,53 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('script')
+<script>
+$('#province_id').on('change', function() {
+    var provinceId = $(this).val();
+    $('#city_id').empty();
+    $('#district_id').empty();
+    $('#village_id').empty();
+
+    if(provinceId) {
+        $.get('/getCities/' + provinceId, function(cities) {
+            $('#city_id').append('<option value="">Pilih Kota/Kabupaten</option>');
+            $.each(cities, function(key, city) {
+                $('#city_id').append('<option value="'+ city.id +'">'+ city.name +'</option>');
+            });
+        });
+    }
+});
+
+$('#city_id').on('change', function() {
+    var cityId = $(this).val();
+    $('#district_id').empty();
+    $('#village_id').empty();
+
+    if(cityId) {
+        $.get('/getDistricts/' + cityId, function(districts) {
+            $('#district_id').append('<option value="">Pilih Kecamatan</option>');
+            $.each(districts, function(key, district) {
+                $('#district_id').append('<option value="'+ district.id +'">'+ district.name +'</option>');
+            });
+        });
+    }
+});
+
+$('#district_id').on('change', function() {
+    var districtId = $(this).val();
+    $('#village_id').empty();
+
+    if(districtId) {
+        $.get('/getVillages/' + districtId, function(villages) {
+            $('#village_id').append('<option value="">Pilih Desa/Kelurahan</option>');
+            $.each(villages, function(key, village) {
+                $('#village_id').append('<option value="'+ village.id +'">'+ village.name +'</option>');
+            });
+        });
+    }
+});
+</script>
 @endsection
