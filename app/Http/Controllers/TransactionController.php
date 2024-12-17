@@ -92,7 +92,7 @@ class TransactionController extends Controller
             'transaction_id' => $transaction->id,
             'user_id' => Auth::user()->id,
             'payment_method' => null,
-            'payment_code' => 'TRX-' . $transaction->id . Auth::user()->id,
+            'payment_code' => 'TRX' . $transaction->id . Auth::user()->id,
             'payment_amount' => $price,
             'payment_status' => 'pending',
         ]);
