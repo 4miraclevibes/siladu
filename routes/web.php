@@ -81,7 +81,6 @@ Route::group([
 Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware('auth')->name('transaction');
 Route::get('/transaction/{id}', [TransactionController::class, 'show'])->middleware('auth')->name('transaction.show');
-Route::get('/instansi', [TransactionController::class, 'instansi'])->middleware('auth')->name('instansi');
 Route::post('/instansi', [TransactionController::class, 'instansiStore'])->middleware('auth')->name('instansi.store');
 Route::get('/noninstansi', [TransactionController::class, 'noninstansi'])->middleware('auth')->name('noninstansi');
 Route::post('/noninstansi', [TransactionController::class, 'noninstansiStore'])->middleware('auth')->name('noninstansi.store');

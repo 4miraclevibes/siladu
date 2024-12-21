@@ -11,12 +11,9 @@
 
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-around align-items-center mb-3">
-        <a href="{{ route('instansi') }}" class="btn btn-sm btn-warning mx-1">
-            <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6"></i></span> Pengajuan Instansi
-        </a>
+    <div class="mb-3">
         <a href="{{ route('noninstansi') }}" class="btn btn-sm btn-dark mx-1">
-            <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6 text-warning"></i></span> Pengajuan Non Instansi
+            <span class="me-1"><i class="bi bi-clipboard-plus-fill fs-6 text-warning"></i></span> Pengajuan
         </a>
     </div>
     <section class="transactions mb-4">

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Village;
-
+use Illuminate\Support\Facades\Log;
 class TransactionController extends Controller
 {
     public function index()
@@ -26,16 +26,6 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         return view('pages.frontend.transaction-detail', compact('transaction'));
     }
-
-    public function instansi()
-    {
-        $parameters = Parameter::all();
-        $locations = Location::all();
-        $qualityStandarts = QualityStandart::all();
-        $provinces = \Indonesia::allProvinces();
-        return view('pages.frontend.instansi', compact('parameters', 'locations', 'qualityStandarts', 'provinces'));
-    }
-
     public function getCities($provinceId)
     {
         $cities = \Indonesia::findProvince($provinceId)->cities;
@@ -52,52 +42,6 @@ class TransactionController extends Controller
     {
         $villages = \Indonesia::findDistrict($districtId)->villages;
         return response()->json($villages);
-    }
-
-    public function instansiStore(Request $request)
-    {
-        $request->validate([
-            'parameter_id' => 'required',
-            'nama_instansi' => 'required',
-            'alamat_instansi' => 'required',
-            'telepon_instansi' => 'required',
-            'email_instansi' => 'required',
-            'nama_penanggung_jawab' => 'required',
-            'identitas_penanggung_jawab' => 'required',
-            'email_penanggung_jawab' => 'required',
-            'no_hp_penanggung_jawab' => 'required',
-            'jenis_bahan_sampel' => 'required',
-            'no_surat' => 'nullable',
-            'file_surat' => 'nullable|file|max:1024|mimes:png,jpg,pdf',
-            'pengembalian_sampel' => 'required',
-            'pengembalian_sisa_sampel' => 'required',
-            'province_id' => 'required',
-            'city_id' => 'required',
-            'district_id' => 'required',
-            'village_id' => 'required',
-        ]);
-
-
-        $data = $request->all();
-
-        if ($request->hasFile('file_surat')) {
-            $data['file_surat'] = $request->file('file_surat')->store('file_surat', 'public');
-        }
-        $data['user_id'] = Auth::user()->id;
-        $data['status'] = 'pending';
-        $transaction = Transaction::create($data);
-        $price = $transaction->parameter->package->harga;
-
-        Payment::create([
-            'transaction_id' => $transaction->id,
-            'user_id' => Auth::user()->id,
-            'payment_method' => null,
-            'payment_code' => 'TRX' . $transaction->id . Auth::user()->id,
-            'payment_amount' => $price,
-            'payment_status' => 'pending',
-        ]);
-        $this->sendWhatsappNotification($transaction);
-        return redirect()->route('transaction')->with('success', 'Pengajuan berhasil dikirim');
     }
 
     public function noninstansi()
@@ -146,6 +90,7 @@ class TransactionController extends Controller
             'payment_amount' => $price,
             'payment_status' => 'pending',
         ]);
+        $this->sendWhatsappNotification($transaction);
         return redirect()->route('transaction')->with('success', 'Pengajuan berhasil dikirim');
     }
 

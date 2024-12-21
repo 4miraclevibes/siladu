@@ -186,12 +186,12 @@
                         <label class="form-label required">Status Uji</label>
                         <div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_uji" id="status_uji_ya" value="ya" required>
-                                <label class="form-check-label" for="status_uji_ya">Ya</label>
+                                <input class="form-check-input" type="radio" name="pengembalian_sisa_sampel" id="pengembalian_sisa_sampel_ya" value="ya" required>
+                                <label class="form-check-label" for="pengembalian_sisa_sampel_ya">Ya</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_uji" id="status_uji_tidak" value="tidak" checked required>
-                                <label class="form-check-label" for="status_uji_tidak">Tidak</label>
+                                <input class="form-check-input" type="radio" name="pengembalian_sisa_sampel" id="pengembalian_sisa_sampel_tidak" value="tidak" checked required>
+                                <label class="form-check-label" for="pengembalian_sisa_sampel_tidak">Tidak</label>
                             </div>
                         </div>
                     </div>
