@@ -101,8 +101,8 @@
                             <i class="bi bi-receipt"></i>
                         </div>
                         <div>
-                            <div class="text-muted small">Total Transaksi</div>
-                            <h3 class="mb-0">{{ number_format($totalTransactions) }}</h3>
+                            <div class="text-muted small">Total Pengujian</div>
+                            <h3 class="mb-0">{{ number_format($totalTransactionDetails) }}</h3>
                         </div>
                     </div>
                 </div>
@@ -123,8 +123,9 @@
                         <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3">
                             <div>
                                 <div class="status-badge
-                                    {{ $status == 'success' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
-                                    {{ $status }}
+                                    {{ $status == 'success' ? 'bg-success-subtle text-success' : 
+                                       ($status == 'pending' ? 'bg-warning-subtle text-warning' : 'bg-danger-subtle text-danger') }}">
+                                    {{ ucfirst($status) }}
                                 </div>
                             </div>
                             <div class="h4 mb-0">{{ number_format($total) }}</div>

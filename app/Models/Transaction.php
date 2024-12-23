@@ -12,26 +12,18 @@ class Transaction extends Model
 {
     protected $fillable = [
         'user_id',
-        'parameter_id',
         'category',
-        'nama_penanggung_jawab',
-        'identitas_penanggung_jawab',
-        'email_penanggung_jawab',
-        'no_hp_penanggung_jawab',
-        'nama_instansi',
-        'email_instansi',
-        'telepon_instansi',
-        'alamat_instansi',
+        'phone',
+        'instansi',
         'no_surat',
         'file_surat',
-        'pengembalian_sampel',
-        'pengembalian_sisa_sampel',
-        'jenis_bahan_sampel',
-        'status',
         'province_id',
         'city_id',
         'district_id',
-        'village_id',
+        'address',
+        'status',
+        'status_pengembalian_sisa',
+        'status_pengembalian_hasil',
     ];
 
     public function user()
@@ -64,8 +56,8 @@ class Transaction extends Model
         return $this->belongsTo(District::class);
     }
 
-    public function village()
+    public function details()
     {
-        return $this->belongsTo(Village::class);
+        return $this->hasMany(TransactionDetail::class);
     }
 }

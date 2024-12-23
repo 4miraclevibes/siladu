@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -15,25 +15,27 @@ class HomeController extends Controller
         $year = request('year', 'all');
         $month = request('month', 'all');
 
-        // Query dasar
-        $transactionsQuery = Transaction::where('user_id', $userId);
+        // Query dasar menggunakan TransactionDetail
+        $transactionDetailsQuery = TransactionDetail::whereHas('transaction', function($query) use ($userId) {
+            $query->where('user_id', $userId);
+        });
 
         // Filter berdasarkan tahun jika dipilih
         if ($year !== 'all') {
-            $transactionsQuery->whereYear('created_at', $year);
+            $transactionDetailsQuery->whereYear('created_at', $year);
         }
 
         // Filter berdasarkan bulan jika dipilih
         if ($month !== 'all') {
-            $transactionsQuery->whereMonth('created_at', $month);
+            $transactionDetailsQuery->whereMonth('created_at', $month);
         }
 
         // Total transaksi berdasarkan filter
-        $totalTransactions = $transactionsQuery->count();
+        $totalTransactionDetails = $transactionDetailsQuery->count();
 
         // Status pembayaran
         $paymentQuery = Payment::select('payment_status', DB::raw('COUNT(*) as total'))
-            ->whereHas('transaction', function($query) use ($userId) {
+            ->whereHas('transactionDetail.transaction', function($query) use ($userId) {
                 $query->where('user_id', $userId);
             });
 
@@ -49,7 +51,7 @@ class HomeController extends Controller
             ->toArray();
 
         return view('pages.frontend.home', compact(
-            'totalTransactions',
+            'totalTransactionDetails',
             'paymentStatus',
             'year',
             'month'

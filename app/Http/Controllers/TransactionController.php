@@ -38,78 +38,113 @@ class TransactionController extends Controller
         return response()->json($districts);
     }
 
-    public function getVillages($districtId)
-    {
-        $villages = \Indonesia::findDistrict($districtId)->villages;
-        return response()->json($villages);
-    }
-
-    public function noninstansi()
+    public function pengajuan()
     {
         $parameters = Parameter::all();
         $locations = Location::all();
         $qualityStandarts = QualityStandart::all();
         $provinces = \Indonesia::allProvinces();
-        return view('pages.frontend.noninstansi', compact('parameters', 'locations', 'qualityStandarts', 'provinces'));
+        return view('pages.frontend.pengajuan', compact('parameters', 'locations', 'qualityStandarts', 'provinces'));
     }
 
-    public function noninstansiStore(Request $request)
+    public function pengajuanStore(Request $request)
     {
         $request->validate([
-            'parameter_id' => 'required',
-            'nama_penanggung_jawab' => 'required',
-            'identitas_penanggung_jawab' => 'required',
-            'email_penanggung_jawab' => 'required',
-            'no_hp_penanggung_jawab' => 'required',
-            'jenis_bahan_sampel' => 'required',
+            'category' => 'required|in:instansi,perusahaan,pribadi',
+            'phone' => 'required',
             'no_surat' => 'nullable',
             'file_surat' => 'nullable|file|max:1024|mimes:png,jpg,pdf',
-            'pengembalian_sampel' => 'required',
-            'pengembalian_sisa_sampel' => 'required',
-            'province_id' => 'required',
-            'city_id' => 'required',
-            'district_id' => 'required',
-            'village_id' => 'required',
+            'province_id' => 'required|exists:indonesia_provinces,id',
+            'city_id' => 'required|exists:indonesia_cities,id',
+            'district_id' => 'required|exists:indonesia_districts,id',
+            'address' => 'required|string',
+            'details.*.parameter_id' => 'required|exists:parameters,id',
+            'details.*.jenis_bahan_sampel' => 'required|string',
+            'details.*.kondisi_sampel' => 'required|string',
+            'details.*.jumlah_sampel' => 'required|integer|min:1',
+            'details.*.activity' => 'required|string',
+            'status_pengembalian_sisa' => 'required|boolean',
+            'status_pengembalian_hasil' => 'required|boolean',
         ]);
 
-        $data = $request->all();
+        try {
+            \DB::beginTransaction();
+            
+            // dd($request->all());
 
-        if ($request->hasFile('file_surat')) {
-            $data['file_surat'] = $request->file('file_surat')->store('file_surat', 'public');
+            // Buat Transaction
+            $transaction = Transaction::create([
+                'user_id' => Auth::id(),
+                'category' => $request->category,
+                'instansi' => $request->category !== 'pribadi' ? $request->instansi : null,
+                'phone' => $request->phone,
+                'no_surat' => $request->no_surat,
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'district_id' => $request->district_id,
+                'address' => $request->address,
+                'status_pengembalian_sisa' => $request->status_pengembalian_sisa,
+                'status_pengembalian_hasil' => $request->status_pengembalian_hasil,
+            ]);
+
+            // Upload file jika ada
+            if ($request->hasFile('file_surat')) {
+                $transaction->file_surat = $request->file('file_surat')->store('file_surat', 'public');
+                $transaction->save();
+            }
+
+            // Buat Transaction Details
+            foreach ($request->details as $detail) {
+                $transactionDetail = $transaction->details()->create([
+                    'parameter_id' => $detail['parameter_id'],
+                    'jenis_bahan_sampel' => $detail['jenis_bahan_sampel'],
+                    'kondisi_sampel' => $detail['kondisi_sampel'],
+                    'jumlah_sampel' => $detail['jumlah_sampel'],
+                    'activity' => $detail['activity'],
+                ]);
+
+                // Buat Payment untuk setiap detail
+                $parameter = Parameter::find($detail['parameter_id']);
+                $price = $parameter->package->harga * $detail['jumlah_sampel'];
+
+                Payment::create([
+                    'transaction_detail_id' => $transactionDetail->id,
+                    'user_id' => Auth::id(),
+                    'payment_code' => 'TRX-' . $transaction->id . '-' . $transactionDetail->id,
+                    'payment_amount' => $price,
+                    'payment_status' => 'pending',
+                ]);
+            }
+
+            \DB::commit();
+            $this->sendWhatsappNotification($transaction);
+            
+            return redirect()->route('transaction')->with('success', 'Pengajuan berhasil dikirim');
+
+        } catch (\Exception $e) {
+            \DB::rollback();
+            Log::error('Pengajuan Error: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memproses pengajuan');
         }
-        $data['user_id'] = Auth::user()->id;
-        $data['status'] = 'pending';
-        $transaction = Transaction::create($data);
-        $price = $transaction->parameter->package->harga;
-
-        Payment::create([
-            'transaction_id' => $transaction->id,
-            'user_id' => Auth::user()->id,
-            'payment_method' => null,
-            'payment_code' => 'TRX-' . $transaction->id . Auth::user()->id,
-            'payment_amount' => $price,
-            'payment_status' => 'pending',
-        ]);
-        $this->sendWhatsappNotification($transaction);
-        return redirect()->route('transaction')->with('success', 'Pengajuan berhasil dikirim');
     }
 
     private function sendWhatsappNotification($transaction)
     {
+        $details = "";
+        foreach($transaction->details as $detail) {
+            $details .= "\n- " . $detail->parameter->name . " (" . $detail->jumlah_sampel . " sampel)";
+        }
+
         $message = "🔔 *Notifikasi Pengajuan Baru*\n\n"
             . "Ada pengajuan baru dari:\n"
-            . "Nama: *" . $transaction->nama_penanggung_jawab . "*\n"
-            . "No HP: *" . $transaction->no_hp_penanggung_jawab . "*\n"
-            . "Email: " . $transaction->email_penanggung_jawab . "\n\n"
-            . "📋 *Detail Pengajuan*\n"
-            . "Parameter: *" . $transaction->parameter->name . "*\n"
-            . "Jenis Sampel: " . $transaction->jenis_bahan_sampel . "\n"
-            . ($transaction->nama_instansi ? "Instansi: " . $transaction->nama_instansi . "\n" : "")
-            . "\n📍 *Lokasi*\n"
+            . "Nama: *" . $transaction->user->name . "*\n"
+            . "Kategori: *" . ucfirst($transaction->category) . "*\n"
+            . "No HP: *" . $transaction->phone . "*\n\n"
+            . "📋 *Detail Pengujian*" . $details . "\n\n"
+            . "📍 *Lokasi*\n"
             . "Provinsi: " . $transaction->province->name . "\n"
             . "Kota/Kabupaten: " . $transaction->city->name . "\n"
-            . "Kecamatan: " . $transaction->district->name . "\n"
-            . "Desa/Kelurahan: " . $transaction->village->name . "\n\n"
+            . "Kecamatan: " . $transaction->district->name . "\n\n"
             . "Status: *PENDING*\n\n"
             . "💡 Silahkan cek dashboard admin untuk detail lebih lanjut.\n"
             . "Waktu Pengajuan: " . $transaction->created_at->format('d M Y H:i') . " WIB";

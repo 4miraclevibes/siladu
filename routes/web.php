@@ -81,9 +81,8 @@ Route::group([
 Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware('auth')->name('transaction');
 Route::get('/transaction/{id}', [TransactionController::class, 'show'])->middleware('auth')->name('transaction.show');
-Route::post('/instansi', [TransactionController::class, 'instansiStore'])->middleware('auth')->name('instansi.store');
-Route::get('/noninstansi', [TransactionController::class, 'noninstansi'])->middleware('auth')->name('noninstansi');
-Route::post('/noninstansi', [TransactionController::class, 'noninstansiStore'])->middleware('auth')->name('noninstansi.store');
+Route::get('/pengajuan', [TransactionController::class, 'pengajuan'])->middleware('auth')->name('pengajuan');
+Route::post('/pengajuan', [TransactionController::class, 'pengajuanStore'])->middleware('auth')->name('pengajuan.store');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware('auth')->name('payment');
 Route::post('/payment/{payment}', [PaymentController::class, 'generatePayment'])->middleware('auth')->name('payment.generate');
 Route::post('/webhook', [WebhookController::class, 'update'])->name('webhook');
