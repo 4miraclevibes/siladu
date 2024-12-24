@@ -10,7 +10,7 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::with('transaction')->latest()->get();
+        $payments = Payment::with('transactionDetail')->latest()->get();
         return view('pages.backend.payments.index', compact('payments'));
     }
 }

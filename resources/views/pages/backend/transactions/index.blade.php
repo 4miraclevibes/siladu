@@ -41,6 +41,8 @@
               <td>
                 @if($detail->status == 'pending')
                   <span class="badge bg-warning">Pending</span>
+                @elseif($detail->status == 'accept')
+                  <span class="badge bg-info">Accept</span>
                 @elseif($detail->status == 'process')
                   <span class="badge bg-info">Process</span>
                 @else
