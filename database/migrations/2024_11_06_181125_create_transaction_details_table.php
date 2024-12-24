@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('jumlah_sampel');
             $table->string('kondisi_sampel');
             $table->string('activity');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

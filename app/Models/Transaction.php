@@ -21,7 +21,6 @@ class Transaction extends Model
         'city_id',
         'district_id',
         'address',
-        'status',
         'status_pengembalian_sisa',
         'status_pengembalian_hasil',
     ];

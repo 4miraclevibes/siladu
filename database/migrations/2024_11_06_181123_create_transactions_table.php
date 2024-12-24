@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('address');
             $table->boolean('status_pengembalian_sisa')->default(false);
             $table->boolean('status_pengembalian_hasil')->default(false);
-            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

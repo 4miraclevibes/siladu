@@ -14,6 +14,7 @@ class TransactionDetail extends Model
         'kondisi_sampel',
         'jumlah_sampel',
         'activity',
+        'status',
     ];
 
     public function transaction()

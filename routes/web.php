@@ -71,8 +71,8 @@ Route::group([
     Route::delete('quality-standarts/{qualityStandart}', [QualityStandartController::class, 'destroy'])->name('quality-standarts.destroy');
     // Transactions
     Route::get('dashboard/transactions', [DashboardTransactionController::class, 'index'])->name('dashboard.transactions.index');
-    Route::get('dashboard/transactions/{transaction}', [DashboardTransactionController::class, 'show'])->name('dashboard.transactions.show');
-    Route::patch('dashboard/transactions/{transaction}', [DashboardTransactionController::class, 'updateStatus'])->name('dashboard.transactions.updateStatus');
+    Route::get('dashboard/transactions/{transactionDetail}', [DashboardTransactionController::class, 'show'])->name('dashboard.transactions.show');
+    Route::patch('dashboard/transactions/{transactionDetail}', [DashboardTransactionController::class, 'updateStatus'])->name('dashboard.transactions.updateStatus');
     // Payments
     Route::get('dashboard/payments', [DashboardPaymentController::class, 'index'])->name('dashboard.payments.index');
 });
