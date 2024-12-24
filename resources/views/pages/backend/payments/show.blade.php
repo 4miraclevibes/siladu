@@ -25,32 +25,32 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="p-3 bg-light rounded">
-                                                <p class="mb-2"><i class="bx bx-bookmark me-2"></i><strong>Nama Proyek:</strong> {{ $transaction->nama_proyek }}</p>
-                                                <p class="mb-2"><i class="bx bx-category me-2"></i><strong>Kategori:</strong> {{ ucfirst($transaction->category) }}</p>
-                                                <p class="mb-0"><i class="bx bx-test-tube me-2"></i><strong>Jenis Bahan Sampel:</strong> {{ $transaction->jenis_bahan_sampel }}</p>
+                                                <p class="mb-2"><i class="bx bx-bookmark me-2"></i><strong>Nama Pelanggan:</strong> {{ $detail->user->name }}</p>
+                                                <p class="mb-2"><i class="bx bx-category me-2"></i><strong>Kategori:</strong> {{ ucfirst($detail->transaction->category) }}</p>
+                                                <p class="mb-0"><i class="bx bx-test-tube me-2"></i><strong>Jenis Bahan Sampel:</strong> {{ $detail->jenis_bahan_sampel }}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="p-3 bg-light rounded">
                                                 <p class="mb-2">
-                                                    <i class="bx bx-check-circle me-2"></i><strong>Status Uji:</strong> 
-                                                    <span class="badge bg-{{ $transaction->status_uji == 'selesai' ? 'success' : 'warning' }} rounded-pill">
-                                                        {{ ucfirst($transaction->status_uji) }}
+                                                    <i class="bx bx-check-circle me-2"></i><strong>Pengembalian Sisa:</strong> 
+                                                    <span class="badge bg-{{ $detail->transaction->status_pengembalian_sisa == 'selesai' ? 'success' : 'warning' }} rounded-pill">
+                                                        {{ ucfirst($detail->transaction->status_pengembalian_sisa) }}
                                                     </span>
                                                 </p>
                                                 <p class="mb-2">
-                                                    <i class="bx bx-transfer me-2"></i><strong>Status Pengembalian:</strong> 
-                                                    <span class="badge bg-{{ $transaction->status_pengembalian == 'dikembalikan' ? 'success' : 'warning' }} rounded-pill">
-                                                        {{ ucfirst($transaction->status_pengembalian) }}
+                                                    <i class="bx bx-transfer me-2"></i><strong>Status Pengembalian Hasil:</strong> 
+                                                    <span class="badge bg-{{ $detail->transaction->status_pengembalian_hasil == 'dikembalikan' ? 'success' : 'warning' }} rounded-pill">
+                                                        {{ ucfirst($detail->transaction->status_pengembalian_hasil) }}
                                                     </span>
                                                 </p>
                                                 <p class="mb-0">
                                                     <i class="bx bx-info-circle me-2"></i><strong>Status:</strong> 
                                                     <span class="badge bg-{{ 
-                                                        $transaction->status == 'pending' ? 'warning' : 
-                                                        ($transaction->status == 'process' ? 'info' : 'success') 
+                                                        $detail->transaction->status == 'pending' ? 'warning' : 
+                                                        ($detail->transaction->status == 'process' ? 'info' : 'success') 
                                                     }} rounded-pill">
-                                                        {{ ucfirst($transaction->status) }}
+                                                        {{ ucfirst($detail->transaction->status) }}
                                                     </span>
                                                 </p>
                                             </div>
@@ -69,10 +69,9 @@
                                         <h6 class="card-subtitle text-info mb-0">Penanggung Jawab</h6>
                                     </div>
                                     <div class="p-3 bg-light rounded">
-                                        <p class="mb-2"><i class="bx bx-user-circle me-2"></i><strong>Nama:</strong> {{ $transaction->nama_penanggung_jawab }}</p>
-                                        <p class="mb-2"><i class="bx bx-id-card me-2"></i><strong>Identitas:</strong> {{ $transaction->identitas_penanggung_jawab }}</p>
-                                        <p class="mb-2"><i class="bx bx-envelope me-2"></i><strong>Email:</strong> {{ $transaction->email_penanggung_jawab }}</p>
-                                        <p class="mb-0"><i class="bx bx-phone me-2"></i><strong>No. HP:</strong> {{ $transaction->no_hp_penanggung_jawab }}</p>
+                                        <p class="mb-2"><i class="bx bx-user-circle me-2"></i><strong>Nama:</strong> {{ $detail->transaction->user->name }}</p>
+                                        <p class="mb-2"><i class="bx bx-envelope me-2"></i><strong>Email:</strong> {{ $detail->transaction->user->email }}</p>
+                                        <p class="mb-0"><i class="bx bx-phone me-2"></i><strong>No. HP:</strong> {{ $detail->transaction->phone }}</p>
                                     </div>
                                 </div>
                             </div>

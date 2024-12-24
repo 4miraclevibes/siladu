@@ -7,6 +7,7 @@ use App\Models\Parameter;
 use App\Models\Location;
 use App\Models\QualityStandart;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Laravolt\Indonesia\Models\City;
@@ -23,8 +24,8 @@ class TransactionController extends Controller
 
     public function show($id)
     {
-        $transaction = Transaction::findOrFail($id);
-        return view('pages.frontend.transaction-detail', compact('transaction'));
+        $detail = TransactionDetail::findOrFail($id);
+        return view('pages.frontend.transaction-detail', compact('detail'));
     }
     public function getCities($provinceId)
     {
@@ -45,6 +46,12 @@ class TransactionController extends Controller
         $qualityStandarts = QualityStandart::all();
         $provinces = \Indonesia::allProvinces();
         return view('pages.frontend.pengajuan', compact('parameters', 'locations', 'qualityStandarts', 'provinces'));
+    }
+
+    private function generatePaymentCode($transactionId, $transactionDetailId, $userId) 
+    {
+        $randomNumber = str_pad(mt_rand(0, 99), 2, '0', STR_PAD_LEFT); // Generate 2 digit random number
+        return sprintf("TRX%d%d%d%s", $transactionId, $transactionDetailId, $userId, $randomNumber);
     }
 
     public function pengajuanStore(Request $request)
@@ -110,7 +117,7 @@ class TransactionController extends Controller
                 Payment::create([
                     'transaction_detail_id' => $transactionDetail->id,
                     'user_id' => Auth::id(),
-                    'payment_code' => 'TRX-' . $transaction->id . '-' . $transactionDetail->id,
+                    'payment_code' => $this->generatePaymentCode($transaction->id, $transactionDetail->id, Auth::id()),
                     'payment_amount' => $price,
                     'payment_status' => 'pending',
                 ]);

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('satuan');
             $table->double('harga');
+            $table->double('discount')->nullable();
             $table->text('catatan')->nullable();
             $table->foreignId('laboratory_id')->constrained('laboratories');
             $table->timestamps();

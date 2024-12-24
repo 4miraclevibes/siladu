@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
-                            <h6 class="card-title mb-1">{{ $payment->transaction->nama_proyek }}</h6>
+                            <h6 class="card-title mb-1">{{ $payment->user->name }}</h6>
                             <p class="text-muted mb-0">
                                 <small>
                                     <i class="bi bi-calendar me-1"></i>

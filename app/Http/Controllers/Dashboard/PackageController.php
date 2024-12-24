@@ -23,6 +23,7 @@ class PackageController extends Controller
             'satuan' => 'required',
             'harga' => 'required',
             'catatan' => 'nullable',
+            'discount' => 'nullable',
             'laboratory_id' => 'required',
         ]);
         $data = $request->all();
@@ -37,6 +38,7 @@ class PackageController extends Controller
             'satuan' => 'required',
             'harga' => 'required',
             'catatan' => 'nullable',
+            'discount' => 'nullable',
             'laboratory_id' => 'required',
         ]);
         $data = $request->all();

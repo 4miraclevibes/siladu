@@ -11,6 +11,7 @@ class Package extends Model
         'satuan',
         'harga',
         'catatan',
+        'discount',
         'laboratory_id'
     ];
 

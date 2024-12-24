@@ -11,7 +11,7 @@
         <thead>
           <tr class="text-nowrap bg-primary">
             <th class="text-white">No</th>
-            <th class="text-white">Nama Proyek</th>
+            <th class="text-white">Nama Pelanggan</th>
             <th class="text-white">Metode Pembayaran</th>
             <th class="text-white">Nominal</th>
             <th class="text-white">Status</th>
@@ -23,7 +23,7 @@
           @foreach ($payments as $payment)
           <tr>
             <th scope="row">{{ $loop->iteration }}</th>
-            <td>{{ $payment->transaction->nama_proyek }}</td>
+            <td>{{ $payment->user->name }}</td>
             <td>
                 <span class="badge bg-primary rounded-pill">
                     {{ ucfirst($payment->payment_method) }}
@@ -63,7 +63,7 @@
                         <i class="bx bx-link"></i>
                     </a>
                     @endif
-                    <a href="{{ route('dashboard.transactions.show', $payment->transaction_id) }}" 
+                    <a href="{{ route('dashboard.transactions.show', $payment->transactionDetail->id) }}" 
                        class="btn btn-primary btn-sm ms-1"
                        data-bs-toggle="tooltip"
                        title="Detail Transaksi">
