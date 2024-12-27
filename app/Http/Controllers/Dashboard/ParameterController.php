@@ -20,7 +20,8 @@ class ParameterController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'package_id' => 'required'
+            'package_id' => 'required',
+            'code' => 'nullable'
         ]);
         $data = $request->all();
         Parameter::create($data);
@@ -31,7 +32,8 @@ class ParameterController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'package_id' => 'required'
+            'package_id' => 'required',
+            'code' => 'nullable'
         ]);
         $data = $request->all();
         $parameter = Parameter::findOrFail($id);

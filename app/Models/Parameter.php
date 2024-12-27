@@ -8,6 +8,7 @@ class Parameter extends Model
 {
     protected $fillable = [
         'name',
+        'code',
         'package_id'
     ];
 

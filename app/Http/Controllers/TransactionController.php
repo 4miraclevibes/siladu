@@ -112,7 +112,7 @@ class TransactionController extends Controller
 
                 // Buat Payment untuk setiap detail
                 $parameter = Parameter::find($detail['parameter_id']);
-                $price = $parameter->package->harga * $detail['jumlah_sampel'];
+                $price = ($parameter->package->harga - $parameter->package->discount) * $detail['jumlah_sampel'];
 
                 Payment::create([
                     'transaction_detail_id' => $transactionDetail->id,

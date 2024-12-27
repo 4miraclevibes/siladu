@@ -16,6 +16,7 @@
           <tr class="text-nowrap table-dark">
             <th class="text-white">No</th>
             <th class="text-white">Nama Parameter</th>
+            <th class="text-white">Code</th>
             <th class="text-white">Package</th>
             <th class="text-white">Actions</th>
           </tr>
@@ -25,6 +26,7 @@
           <tr>
             <th scope="row">{{ $loop->iteration }}</th>
             <td>{{ $parameter->name }}</td>
+            <td>{{ $parameter->code }}</td>
             <td>{{ $parameter->package->name }}</td>
             <td>
                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $parameter->id }}">Edit</button>
@@ -57,6 +59,10 @@
           <div class="mb-3">
             <label class="form-label">Nama Parameter</label>
             <input type="text" class="form-control" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Code</label>
+            <input type="text" class="form-control" name="code">
           </div>
           <div class="mb-3">
             <label class="form-label">Package</label>
@@ -93,6 +99,10 @@
           <div class="mb-3">
             <label class="form-label">Nama Parameter</label>
             <input type="text" class="form-control" name="name" value="{{ $parameter->name }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Code</label>
+            <input type="text" class="form-control" name="code" value="{{ $parameter->code }}">
           </div>
           <div class="mb-3">
             <label class="form-label">Package</label>

@@ -9,7 +9,7 @@
             </div>
             <div class="col-3 text-center">
                 <a href="{{ route('transaction') }}" class="text-decoration-none text-secondary">
-                    <i class="bi bi-pencil{{ Route::is('transaction', 'instansi', 'noninstansi', 'transaction.show') ? '-fill' : '' }} fs-2"></i>
+                    <i class="bi bi-pencil{{ Route::is('transaction', 'pengajuan', 'pengajuan.show') ? '-fill' : '' }} fs-2"></i>
                     <p class="mb-0 small" style="font-size: 10px !important;">Pengajuan</p>
                 </a>
             </div>

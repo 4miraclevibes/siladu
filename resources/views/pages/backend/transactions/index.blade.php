@@ -18,7 +18,7 @@
         <thead>
           <tr class="text-nowrap table-dark">
             <th class="text-white">No</th>
-            <th class="text-white">Penanggung Jawab</th>
+            <th class="text-white">Pelanggan</th>
             <th class="text-white">Instansi</th>
             <th class="text-white">Parameter</th>
             <th class="text-white">Jumlah Sampel</th>

@@ -66,7 +66,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Kategori</label>
                         <select class="form-select" name="category" id="category" required>
                             <option value="">Pilih Kategori</option>
@@ -75,15 +75,15 @@
                             <option value="pribadi">Pribadi</option>
                         </select>
                     </div>
-                    <div class="col-md-6 mb-3" id="instansiField" style="display: none;">
+                    <div class="col-md-12 mb-3" id="instansiField" style="display: none;">
                         <label class="form-label required">Nama Instansi</label>
                         <input type="text" class="form-control" name="instansi" placeholder="Masukkan nama instansi">
                     </div>
-                    <div class="col-md-6 mb-3" id="perusahaanField" style="display: none;">
+                    <div class="col-md-12 mb-3" id="perusahaanField" style="display: none;">
                         <label class="form-label required">Nama Perusahaan</label>
                         <input type="text" class="form-control" name="instansi" placeholder="Masukkan nama perusahaan">
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">No. WhatsApp</label>
                         <input type="number" class="form-control" name="phone" required>
                         <small class="text-muted">
@@ -91,12 +91,12 @@
                             Jangan gunakan awalan +62 atau 0
                         </small>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label">Nomor Surat</label>
                         <input type="text" class="form-control" name="no_surat">
                         <small class="text-muted">(Opsional)</small>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label">File Surat</label>
                         <input type="file" class="form-control" name="file_surat" accept=".png,.jpg,.pdf">
                         <small class="text-muted">File Surat Permohonan (opsional)<br>Max File Size: 1 Mb (png/jpg/pdf)</small>
@@ -111,7 +111,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Provinsi</label>
                         <select class="form-select" name="province_id" id="province_id" required>
                             <option value="">Pilih Provinsi</option>
@@ -120,19 +120,19 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Kabupaten/Kota</label>
                         <select class="form-select" name="city_id" id="city_id" required>
                             <option value="">Pilih Kabupaten/Kota</option>
                         </select>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Kecamatan</label>
                         <select class="form-select" name="district_id" id="district_id" required>
                             <option value="">Pilih Kecamatan</option>
                         </select>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Alamat Lengkap</label>
                         <textarea class="form-control shadow-none" name="address" required 
                                   placeholder="Masukkan alamat lengkap (nama jalan, nomor rumah, RT/RW, dll)"></textarea>
@@ -234,7 +234,7 @@
                     </small>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Pengembalian Sampel Sisa</label>
                         <div>
                             <div class="form-check form-check-inline">
@@ -248,7 +248,7 @@
                         </div>
                         <small class="text-muted">Apakah Anda ingin sisa sampel dikembalikan setelah pengujian?</small>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label required">Pengembalian Sampel Hasil</label>
                         <div>
                             <div class="form-check form-check-inline">

@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('parameters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('code')->default('xxx');
             $table->foreignId('package_id')->constrained('packages');
             $table->timestamps();
         });
