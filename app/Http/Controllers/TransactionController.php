@@ -10,10 +10,8 @@ use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
-use Laravolt\Indonesia\Models\City;
-use Laravolt\Indonesia\Models\District;
-use Laravolt\Indonesia\Models\Village;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 class TransactionController extends Controller
 {
     public function index()
