@@ -11,7 +11,6 @@ use App\Models\TransactionDetail;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 class TransactionController extends Controller
 {
     public function index()
