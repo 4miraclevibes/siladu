@@ -60,7 +60,7 @@ class TransactionController extends Controller
             'parameters' => Parameter::all(),
             'locations' => Location::all(),
             'quality_standarts' => QualityStandart::all(),
-            'provinces' => \Indonesia::allProvinces()
+            'provinces' => \Indonesia::allProvinces()->load('cities.districts')
         ];
 
         return response()->json([
