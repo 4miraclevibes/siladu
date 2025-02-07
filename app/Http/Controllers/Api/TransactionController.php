@@ -17,6 +17,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::where('user_id', Auth::user()->id)
+            ->with('details')
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -29,7 +30,7 @@ class TransactionController extends Controller
     public function show($id)
     {
         try {
-            $detail = TransactionDetail::findOrFail($id);
+            $detail = TransactionDetail::with('details')->findOrFail($id);
             return response()->json([
                 'status' => 'success',
                 'data' => $detail
