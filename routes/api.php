@@ -18,4 +18,5 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth:sanctum'
 Route::post('webhook', [WebhookController::class, 'update'])->middleware('auth:sanctum');
 Route::get('transaction', [TransactionController::class, 'index'])->middleware('auth:sanctum');
 Route::get('transaction/pengajuan', [TransactionController::class, 'pengajuan'])->middleware('auth:sanctum');
+Route::post('transaction/pengajuan', [TransactionController::class, 'pengajuanStore'])->middleware('auth:sanctum');
 
