@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,10 @@ class HomeController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
+        $transactions = Transaction::where('user_id', Auth::user()->id)
+            ->with('details.parameter.package')
+            ->orderBy('created_at', 'desc')
+            ->get();
         $year = request('year', 'all');
         $month = request('month', 'all');
 
@@ -58,6 +63,7 @@ class HomeController extends Controller
             'data' => [
                 'total_transactions' => $totalTransactionDetails,
                 'payment_status' => $paymentStatus,
+                'transaction' => $transactions,
                 'filters' => [
                     'year' => $year,
                     'month' => $month
