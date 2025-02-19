@@ -30,11 +30,6 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function parameter()
-    {
-        return $this->belongsTo(Parameter::class);
-    }
-
     public function payment()
     {
         return $this->hasOne(Payment::class);

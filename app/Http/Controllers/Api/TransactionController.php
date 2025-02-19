@@ -17,7 +17,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::where('user_id', Auth::user()->id)
-            ->with('details')
+            ->with('details.parameter.package')
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -58,7 +58,7 @@ class TransactionController extends Controller
     public function pengajuan()
     {
         $data = [
-            'parameters' => Parameter::all(),
+            'parameters' => Parameter::with('package')->get(),
             'locations' => Location::all(),
             'quality_standarts' => QualityStandart::all(),
             'provinces' => \Indonesia::allProvinces()->load('cities.districts')
