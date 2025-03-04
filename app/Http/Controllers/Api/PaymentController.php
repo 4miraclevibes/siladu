@@ -39,4 +39,16 @@ class PaymentController extends Controller
             'data' => $payment
         ], 200);
     } 
+
+    public function show($id)
+    {
+        $payment = Payment::with('user', 'transactionDetail')->where('id', $id)->first();
+        return response()->json([
+            'status' => 'success',
+            'data' => $payment
+        ], 200);
+    }
+
+
+
 }
