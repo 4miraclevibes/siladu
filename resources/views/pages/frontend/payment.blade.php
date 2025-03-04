@@ -33,6 +33,10 @@
                                     <span class="badge bg-warning rounded-pill px-3">
                                         <i class="bi bi-clock me-1"></i>Pending
                                     </span>
+                                @elseif($payment->payment_status == 'draft')
+                                    <span class="badge bg-primary rounded-pill px-3">
+                                        <i class="bi bi-clock me-1"></i>Draft
+                                    </span>
                                 @else
                                     <span class="badge bg-danger rounded-pill px-3">
                                         <i class="bi bi-x-circle me-1"></i>Gagal
@@ -61,20 +65,12 @@
 
                     @if($payment->payment_status == 'pending')
                         <div class="text-end mt-4">
-                            @if($payment->payment_link)
-                                <a href="{{ $payment->payment_link }}" 
-                                   class="btn btn-primary px-4"
-                                   target="_blank">
-                                    <i class="bi bi-credit-card me-2"></i>Lanjutkan Pembayaran
-                                </a>
-                            @else
-                                <button type="button" 
-                                   class="btn btn-primary px-4"
-                                   data-bs-toggle="modal" 
-                                   data-bs-target="#generatePayment{{ $payment->id }}">
-                                    <i class="bi bi-credit-card me-2"></i>Generate Pembayaran
-                                </button>
-                            @endif
+                            <button type="button" 
+                                class="btn btn-primary px-4"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#generatePayment{{ $payment->id }}">
+                                <i class="bi bi-credit-card me-2"></i>Submit Pembayaran
+                            </button>
                         </div>
                     @endif
                 </div>
@@ -84,26 +80,29 @@
             <div class="modal fade" id="generatePayment{{ $payment->id }}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="{{ route('payment.generate', $payment->id) }}" method="POST">
+                        <form action="{{ route('payment.update', $payment->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="modal-header">
                                 <h5 class="modal-title">Generate Pembayaran</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label class="form-label">Metode Pembayaran</label>
                                     <select name="payment_method" class="form-select" required>
                                         <option value="">Pilih metode pembayaran</option>
-                                        <option value="bca_va">BCA Virtual Account</option>
-                                        <option value="bni_va">BNI Virtual Account</option>
-                                        <option value="bri_va">BRI Virtual Account</option>
+                                        <option value="cash">Cash</option>
+                                        <option value="bank_transfer">Bank Transfer</option>
                                     </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="payment_proof" class="form-label">Bukti Pembayaran</label>
+                                    <input type="file" name="payment_proof" class="form-control" id="payment_proof" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary">Generate</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>

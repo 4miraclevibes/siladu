@@ -15,6 +15,21 @@ class PaymentController extends Controller
         return view('pages.frontend.payment', compact('payments'));
     }
 
+    public function update(Request $request, Payment $payment)
+    {
+        $request->validate([
+            'payment_proof' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'payment_method' => 'required|in:cash,bank_transfer'
+        ]);
+
+        $payment->update([
+            'payment_proof' => $request->file('payment_proof')->store('payment_proof', 'public'),
+            'payment_method' => $request->payment_method,
+            'payment_status' => 'draft'
+        ]);
+        return back()->with('success', 'Berhasil upload bukti pembayaran');
+    } 
+
 
     public function generatePayment(Request $request, Payment $payment)
     {

@@ -11,7 +11,7 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Transaction::with(['parameter']);
+        $query = Transaction::with(['user']);
 
         if ($request->category) {
             $query->where('category', $request->category);

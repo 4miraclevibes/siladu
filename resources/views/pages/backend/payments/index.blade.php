@@ -43,6 +43,10 @@
                     <span class="badge bg-warning rounded-pill">
                         <i class="bx bx-time-five me-1"></i>Pending
                     </span>
+                @elseif($payment->payment_status == 'draft')
+                    <span class="badge bg-primary rounded-pill">
+                        <i class="bx bx-time-five me-1"></i>Draft
+                    </span>
                 @else
                     <span class="badge bg-danger rounded-pill">
                         <i class="bx bx-x-circle me-1"></i>Gagal
@@ -54,21 +58,15 @@
             </td>
             <td>
                 <div class="btn-group">
-                    @if($payment->payment_link)
-                    <a href="{{ $payment->payment_link }}" 
-                       class="btn btn-info btn-sm"
-                       target="_blank"
-                       data-bs-toggle="tooltip"
-                       title="Link Pembayaran">
-                        <i class="bx bx-link"></i>
-                    </a>
-                    @endif
                     <a href="{{ route('dashboard.transactions.show', $payment->transactionDetail->id) }}" 
                        class="btn btn-primary btn-sm ms-1"
                        data-bs-toggle="tooltip"
                        title="Detail Transaksi">
                         <i class="bx bx-detail"></i>
                     </a>
+                    <button type="button" class="btn btn-warning btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#updatePayment{{ $payment->id }}">
+                        <i class="bx bx-edit"></i>
+                    </button>
                 </div>
             </td>
           </tr>
@@ -78,6 +76,38 @@
     </div>
   </div>
 </div>
+
+@foreach ($payments as $payment)
+<div class="modal fade" id="updatePayment{{ $payment->id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('dashboard.payments.update', $payment->id) }}" method="POST">
+                @csrf
+                @method('PATCH')
+                <div class="modal-header">
+                    <h5 class="modal-title">Perbarui Status Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="payment_status" class="form-label">Status Pembayaran</label>
+                        <select name="payment_status" class="form-select" required>
+                            <option value="draft" {{ $payment->payment_status == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="success" {{ $payment->payment_status == 'success' ? 'selected' : '' }}>Lunas</option>
+                            <option value="pending" {{ $payment->payment_status == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="failed" {{ $payment->payment_status == 'failed' ? 'selected' : '' }}>Gagal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Perbarui</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 @push('scripts')

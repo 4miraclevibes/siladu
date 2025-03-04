@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('payment_method')->nullable();
             $table->double('payment_amount');
             $table->string('payment_status')->default('pending');
-            $table->string('payment_link')->nullable();
+            $table->string('payment_proof')->nullable();
             $table->string('payment_code')->nullable();
             $table->timestamps();
         });

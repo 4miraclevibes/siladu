@@ -75,6 +75,8 @@ Route::group([
     Route::patch('dashboard/transactions/{transactionDetail}', [DashboardTransactionController::class, 'updateStatus'])->name('dashboard.transactions.updateStatus');
     // Payments
     Route::get('dashboard/payments', [DashboardPaymentController::class, 'index'])->name('dashboard.payments.index');
+    Route::get('dashboard/payments/{payment}', [DashboardPaymentController::class, 'show'])->name('dashboard.payments.show');
+    Route::patch('dashboard/payments/{payment}', [DashboardPaymentController::class, 'update'])->name('dashboard.payments.update');
 });
 
 // Frontend
@@ -84,9 +86,12 @@ Route::get('/transaction/{id}', [TransactionController::class, 'show'])->middlew
 Route::get('/pengajuan', [TransactionController::class, 'pengajuan'])->middleware('auth')->name('pengajuan');
 Route::post('/pengajuan', [TransactionController::class, 'pengajuanStore'])->middleware('auth')->name('pengajuan.store');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware('auth')->name('payment');
-Route::post('/payment/{payment}', [PaymentController::class, 'generatePayment'])->middleware('auth')->name('payment.generate');
-Route::post('/webhook', [WebhookController::class, 'update'])->name('webhook');
+Route::put('/payment/{payment}', [PaymentController::class, 'update'])->middleware('auth')->name('payment.update');
 Route::get('/getCities/{province_id}', [TransactionController::class, 'getCities']);
 Route::get('/getDistricts/{city_id}', [TransactionController::class, 'getDistricts']);
 Route::get('/getVillages/{district_id}', [TransactionController::class, 'getVillages']);
+
+//Pendign Feature
+Route::post('/payment/{payment}', [PaymentController::class, 'generatePayment'])->middleware('auth')->name('payment.generate');
+Route::post('/webhook', [WebhookController::class, 'update'])->name('webhook');
 require __DIR__.'/auth.php';

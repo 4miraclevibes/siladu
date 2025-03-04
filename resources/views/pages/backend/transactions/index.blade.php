@@ -20,7 +20,6 @@
             <th class="text-white">No</th>
             <th class="text-white">Pelanggan</th>
             <th class="text-white">Instansi</th>
-            <th class="text-white">Parameter</th>
             <th class="text-white">Jumlah Sampel</th>
             <th class="text-white">Kategori</th>
             <th class="text-white">Status</th>
@@ -35,7 +34,6 @@
               <th scope="row">{{ $loop->parent->iteration }}</th>
               <td>{{ $transaction->user->name }}</td>
               <td>{{ $transaction->instansi ?? '-' }}</td>
-              <td>{{ $detail->parameter->name }}</td>
               <td>{{ $detail->jumlah_sampel }}</td>
               <td>{{ $detail->transaction->category }}</td>
               <td>
@@ -54,6 +52,8 @@
                       <span class="badge bg-success">Lunas</span>
                   @elseif($detail->payment->payment_status == 'pending')
                       <span class="badge bg-warning">Pending</span>
+                  @elseif($detail->payment->payment_status == 'draft')
+                      <span class="badge bg-primary">Draft</span>
                   @else
                       <span class="badge bg-danger">Gagal</span>
                   @endif
