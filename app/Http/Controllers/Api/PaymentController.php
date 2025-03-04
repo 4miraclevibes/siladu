@@ -56,8 +56,9 @@ class PaymentController extends Controller
         $transaction = $transactionDetail->transaction;
         $details = "";
         
-        foreach($transactionDetail->parameter->details as $detail) {
-            $details .= "\n- " . $detail->parameter->name . " (" . $detail->jumlah_sampel . " sampel)";
+        $parameter = $transactionDetail->parameter;
+        if ($parameter) {
+            $details .= "\n- " . $parameter->name . " (" . $transactionDetail->jumlah_sampel . " sampel)";
         }
 
         $message = "🔔 *Notifikasi Pengajuan Baru*\n\n"
@@ -102,4 +103,5 @@ class PaymentController extends Controller
         curl_close($curl);
         return $response;
     }
+    
 }
