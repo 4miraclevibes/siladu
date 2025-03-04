@@ -34,7 +34,7 @@ class PaymentController extends Controller
         $payment->save();
 
         return response()->json([
-            'success' => true,
+            'status' => 'success',
             'message' => 'Berhasil upload bukti pembayaran',
             'data' => $payment
         ], 200);
