@@ -17,7 +17,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::where('user_id', Auth::user()->id)
-            ->with('details.parameter.package', 'users')
+            ->with('details.parameter.package', 'user')
             ->orderBy('created_at', 'desc')
             ->get();
         
