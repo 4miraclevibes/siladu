@@ -21,9 +21,6 @@ class PaymentController extends Controller
     public function update(Request $request, $id)
     {
         $payment = Payment::find($id);
-        return response()->json([
-            'data' => $payment
-        ]);
         $request->validate([
             'payment_proof' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'payment_method' => 'required|in:cash,bank_transfer'
