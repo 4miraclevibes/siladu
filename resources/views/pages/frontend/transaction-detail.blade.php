@@ -27,6 +27,10 @@
                                     <span class="badge bg-warning rounded-pill">
                                         <i class="bi bi-clock me-1"></i>Pending
                                     </span>
+                                @elseif($detail->status == 'process')
+                                <span class="badge bg-primary">
+                                    <i class="bi bi-clock me-1"></i>Process
+                                </span>
                                 @else
                                     <span class="badge bg-danger rounded-pill">
                                         <i class="bi bi-x-circle me-1"></i>Gagal
