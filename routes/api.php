@@ -25,7 +25,7 @@ Route::get('transaction/pengajuan/{id}', [TransactionController::class, 'pengaju
 //Payment
 Route::get('payment', [PaymentController::class, 'index'])->middleware('auth:sanctum');
 Route::get('payment/{id}', [PaymentController::class, 'show'])->middleware('auth:sanctum');
-Route::put('payment/{id}', [PaymentController::class, 'update'])->middleware('auth:sanctum');
+Route::post('payment/{id}', [PaymentController::class, 'update'])->middleware('auth:sanctum');
 
 
 //Pending Feature
