@@ -1,7 +1,7 @@
 @extends('layouts.frontend.main')
 
 @section('content')
-<div class="container py-4">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
