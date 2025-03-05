@@ -120,7 +120,9 @@ class TransactionController extends Controller
                 $transaction->save();
             }
 
-            foreach ($request->details as $detail) {
+            $details = json_decode($request->input('details'), true);
+
+            foreach ($details as $detail) {
                 $transactionDetail = $transaction->details()->create([
                     'parameter_id' => $detail['parameter_id'],
                     'jenis_bahan_sampel' => $detail['jenis_bahan_sampel'],
