@@ -130,13 +130,12 @@ class TransactionController extends Controller
                 // Jika multipart/form-data, lakukan json_decode
                 $details = json_decode($details, true);
             }
-
+            
             // Pastikan $details adalah array sebelum di-loop
             if (!is_array($details)) {
                 return response()->json(['error' => 'Invalid details format'], 400);
             }
 
-            // Loop data
             foreach ($details as $detail) {
                 $transactionDetail = $transaction->details()->create([
                     'parameter_id' => $detail['parameter_id'],
@@ -144,8 +143,7 @@ class TransactionController extends Controller
                     'kondisi_sampel' => $detail['kondisi_sampel'],
                     'jumlah_sampel' => $detail['jumlah_sampel'],
                     'activity' => $detail['activity'],
-                    ]);
-                }
+                ]);
 
                 $parameter = Parameter::find($detail['parameter_id']);
                 $price = ($parameter->package->harga - $parameter->package->discount) * $detail['jumlah_sampel'];
