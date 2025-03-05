@@ -103,6 +103,7 @@ class TransactionController extends Controller
                 'user_id' => Auth::id(),
                 'category' => $request->category,
                 'instansi' => $request->category !== 'pribadi' ? $request->instansi : null,
+                'file_surat' => $request->file_surat,
                 'phone' => $request->phone,
                 'no_surat' => $request->no_surat,
                 'province_id' => $request->province_id,
