@@ -16,6 +16,7 @@
             <th class="text-white">Nominal</th>
             <th class="text-white">Status</th>
             <th class="text-white">Kode Pembayaran</th>
+            <th class="text-white">Payment Proof</th>
             <th class="text-white">Actions</th>
           </tr>
         </thead>
@@ -56,6 +57,7 @@
             <td>
                 <code>{{ $payment->payment_code }}</code>
             </td>
+            <td><a href="{{ Storage::url($payment->payment_proof) }}"></a></td>
             <td>
                 <div class="btn-group">
                     <a href="{{ route('dashboard.transactions.show', $payment->transactionDetail->id) }}" 
