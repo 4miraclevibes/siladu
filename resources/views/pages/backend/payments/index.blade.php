@@ -57,7 +57,7 @@
             <td>
                 <code>{{ $payment->payment_code }}</code>
             </td>
-            <td><a href="{{ Storage::url($payment->payment_proof) }}"></a></td>
+            <td><a href="{{ Storage::url($payment->payment_proof) }}" class="btn btn-sm btn-primary" target="_blank">Bukti bayar</a></td>
             <td>
                 <div class="btn-group">
                     <a href="{{ route('dashboard.transactions.show', $payment->transactionDetail->id) }}" 
