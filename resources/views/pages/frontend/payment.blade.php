@@ -50,7 +50,7 @@
                         <div class="col-md-6">
                             <div class="d-flex flex-column">
                                 <small class="text-muted mb-1">Metode Pembayaran</small>
-                                <span class="badge bg-primary rounded-pill w-auto align-self-start px-3">
+                                <span class="badge bg-{{ $payment->payment_method == 'cash' ? 'success' : 'primary' }} rounded-pill w-auto align-self-start px-3">
                                     {{ ucfirst($payment->payment_method) }}
                                 </span>
                             </div>

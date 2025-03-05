@@ -18,8 +18,9 @@ class PaymentController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, $id)
     {
+        $payment = Payment::find($id);
         $request->validate([
             'payment_proof' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'payment_method' => 'required|in:cash,bank_transfer'
@@ -103,5 +104,5 @@ class PaymentController extends Controller
         curl_close($curl);
         return $response;
     }
-    
+
 }

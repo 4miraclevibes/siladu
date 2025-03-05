@@ -86,6 +86,10 @@
                                         <span class="badge bg-warning">
                                             <i class="bi bi-clock me-1"></i>Pending
                                         </span>
+                                    @elseif($detail->payment->payment_status == 'draft')
+                                        <span class="badge bg-primary">
+                                            <i class="bi bi-clock me-1"></i>Draft
+                                        </span>
                                     @else
                                         <span class="badge bg-danger">
                                             <i class="bi bi-x-circle me-1"></i>Gagal
