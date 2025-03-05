@@ -164,6 +164,8 @@
                                     <span class="badge bg-success rounded-pill">Lunas</span>
                                 @elseif($detail->payment->payment_status == 'pending')
                                     <span class="badge bg-warning rounded-pill">Pending</span>
+                                @elseif($detail->payment->payment_status == 'draft')
+                                    <span class="badge bg-primary rounded-pill">Draft</span>
                                 @else
                                     <span class="badge bg-danger rounded-pill">Gagal</span>
                                 @endif
