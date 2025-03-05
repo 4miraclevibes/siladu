@@ -19,20 +19,17 @@
                             <i class="bi bi-briefcase me-2"></i>Informasi Proyek
                         </h6>
                         <div>
-                            @if($detail->payment)
-                                @if($detail->payment->payment_status == 'success')
+                                @if($detail->status == 'success')
                                     <span class="badge bg-success rounded-pill">
                                         <i class="bi bi-check-circle me-1"></i>Lunas
                                     </span>
-                                @elseif($detail->payment->payment_status == 'pending')
+                                @elseif($detail->status == 'pending')
                                     <span class="badge bg-warning rounded-pill">
                                         <i class="bi bi-clock me-1"></i>Pending
                                     </span>
-                                @else
                                     <span class="badge bg-danger rounded-pill">
                                         <i class="bi bi-x-circle me-1"></i>Gagal
                                     </span>
-                                @endif
                             @endif
                         </div>
                     </div>
