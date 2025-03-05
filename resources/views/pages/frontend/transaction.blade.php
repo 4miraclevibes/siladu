@@ -77,11 +77,11 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                    @if($detail->payment->payment_status == 'success')
+                                    @if($detail->status == 'success')
                                         <span class="badge bg-success">
                                             <i class="bi bi-check-circle me-1"></i>Lunas
                                         </span>
-                                    @elseif($detail->payment->payment_status == 'pending')
+                                    @elseif($detail->status == 'pending')
                                         <span class="badge bg-warning">
                                             <i class="bi bi-clock me-1"></i>Pending
                                         </span>
