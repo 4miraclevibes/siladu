@@ -76,7 +76,7 @@
               <li class="menu-item {{ Route::is('dashboard.transactions.index', 'dashboard.transactions.show') ? 'active' : '' }}">
                 <a href="{{ route('dashboard.transactions.index') }}" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-file"></i>
-                  <div data-i18n="Transactions">Transactions</div>
+                  <div data-i18n="Transactions">Pengajuan</div>
                 </a>
               </li>
               <!-- Payments -->
